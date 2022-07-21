@@ -1,5 +1,6 @@
 from django.urls import include, path
 from rest_framework import routers
+from django.views.generic import TemplateView
 
 from .views import (CommentViewSet, FollowViewSet, GroupViewSet,
                     PostViewSet, UserViewSet)
@@ -13,5 +14,11 @@ router_v1.register(r'posts/(?P<post_id>\d+)/comments',
                    CommentViewSet, basename='comments')
 
 urlpatterns = [
-    path('', include(router_v1.urls))
+    path('', include(router_v1.urls)),
+    path('', include('djoser.urls.jwt')),
+    path(
+        'redoc/',
+        TemplateView.as_view(template_name='redoc.html'),
+        name='redoc'
+    ),
 ]
